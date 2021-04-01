@@ -12,9 +12,14 @@ public class Unit : MonoBehaviour
     public int maxHP;
     public int currentHP;
 
-    public bool TakeDamage(int Damage)
+    public enum Element { Electricity, Wind, Earth }
+
+    public Element element;
+
+
+    public bool TakeDamage(int DamageDelt)
     {
-        currentHP -= damage;
+        currentHP -= DamageDelt;
 
         if (currentHP <= 0)
             return true;
