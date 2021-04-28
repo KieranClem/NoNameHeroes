@@ -16,13 +16,18 @@ public class Unit : MonoBehaviour
 
     public Element element;
 
+    [HideInInspector] public bool isDead;
+
 
     public bool TakeDamage(int DamageDelt)
     {
         currentHP -= DamageDelt;
 
         if (currentHP <= 0)
+        {
+            isDead = true;
             return true;
+        }
         else
             return false;
     }
