@@ -8,6 +8,7 @@ public class PlayerMovement : MonoBehaviour
     public Rigidbody2D rb;
     Vector2 movement;
     public Animator animator;
+    public StartBattle LoadManager;
 
     // Update is called once per frame
     void Update()
@@ -24,5 +25,13 @@ public class PlayerMovement : MonoBehaviour
     private void FixedUpdate()
     {
         rb.MovePosition(rb.position + movement * MovementSpeed * Time.fixedDeltaTime);
+    }
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if(collision.tag == "Enemy")
+        {
+            LoadManager.ChangeToBattleScene();
+        }
     }
 }

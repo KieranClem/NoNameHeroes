@@ -28,11 +28,16 @@ public class BattleSystem : MonoBehaviour
     public Image magicUI;
 
     public BattleState state;
+
+    [HideInInspector]public InformationStorage PlayerInfo;
+    [HideInInspector] public StartBattle LoadManagement;
     
     // Start is called before the first frame update
     void Start()
     {
         state = BattleState.START;
+        PlayerInfo = GameObject.Find("InformationStorage").GetComponent<InformationStorage>();
+        LoadManagement = PlayerInfo.gameObject.GetComponent<StartBattle>();
         StartCoroutine(SetUpBattle());
         magicUI.gameObject.SetActive(false);
     }
@@ -50,6 +55,11 @@ public class BattleSystem : MonoBehaviour
 
         dialogueText.text ="Monster " + enemyUnit.unitName + " attacks!";
 
+        if(PlayerInfo.BattleNumber > 0)
+        {
+            SetStats();
+        }
+
         playerHud.SetHud(playerUnit);
         Party2Hud.SetHud(Party2Unit);
         enemyHud.SetHud(enemyUnit);
@@ -58,6 +68,16 @@ public class BattleSystem : MonoBehaviour
 
         state = BattleState.PLAYERTURN;
         PlayerTurn();
+    }
+
+    void SetStats()
+    {
+        //Set player information
+        playerUnit.unitLevel = PlayerInfo.PlayerLevel; playerUnit.currentHP = PlayerInfo.PlayerCurrentHP; playerUnit.maxHP = PlayerInfo.PlayerMaxHP; 
+        playerUnit.damage = PlayerInfo.PlayerDamage; playerUnit.EXP = PlayerInfo.PlayerEXP;
+        //Set player 2 information
+        Party2Unit.unitLevel = PlayerInfo.Party2Level; Party2Unit.currentHP = PlayerInfo.Party2CurrentHP; Party2Unit.maxHP = PlayerInfo.Party2MaxHP;
+        Party2Unit.damage = PlayerInfo.Party2Damage; Party2Unit.EXP = PlayerInfo.Party2EXP;
     }
 
     IEnumerator PlayerAttack(Unit CurrentUnit)
@@ -294,12 +314,72 @@ public class BattleSystem : MonoBehaviour
     {
         if(state == BattleState.WON)
         {
-            dialogueText.text = "All enemies defeated!";
+            PlayerInfo.BattleNumber += 1;
+
+            dialogueText.text = "All enemies defeated! Party gained 10 exp";
+            
+            //AddExperience/LevelUp
+            int PlayerDamageIncrease, PlayerHealthIncrease;
+            int Party2DamageIncrease, Party2HealthIncrease;
+            bool PlayerLeveledUp = false, Party2LeveledUp = false;
+
+
+            playerUnit.CheckForLevelUp(10, out PlayerLeveledUp, out PlayerHealthIncrease, out PlayerDamageIncrease);
+            Party2Unit.CheckForLevelUp(10, out Party2LeveledUp, out Party2HealthIncrease, out Party2DamageIncrease);
+
+            float WaitTime = 3f;
+
+            if (PlayerLeveledUp || Party2LeveledUp)
+            {
+                if (PlayerLeveledUp)
+                {
+                    StartCoroutine(LevelUp(playerUnit, PlayerHealthIncrease, PlayerDamageIncrease, WaitTime));
+                    WaitTime = 9f;
+                    if (Party2LeveledUp)
+                    {
+                        StartCoroutine(LevelUp(Party2Unit, Party2HealthIncrease, Party2DamageIncrease, WaitTime));
+                        WaitTime = 18f;
+                    }
+
+                    StartCoroutine(ChangeScene(WaitTime));
+                }
+                else if (Party2LeveledUp)
+                {
+                    StartCoroutine(LevelUp(Party2Unit, Party2HealthIncrease, Party2DamageIncrease, WaitTime));
+                    WaitTime = 9f;
+                    StartCoroutine(ChangeScene(WaitTime));
+                }
+            }
+            else
+            {
+                StartCoroutine(ChangeScene(WaitTime));
+            }
         }
         else if(state == BattleState.LOST)
         {
             dialogueText.text = "You where defeated";
         }
+    }
+
+    IEnumerator LevelUp(Unit PartyMember, int HealthIncrease, int DamgeIncrease, float waitTime)
+    {
+        yield return new WaitForSeconds(waitTime);
+        dialogueText.text = PartyMember.name + " leveled up!";
+        yield return new WaitForSeconds(2f);
+        dialogueText.text = "Damage increase by " + DamgeIncrease + "\n Health increased by " + HealthIncrease;
+        yield return new WaitForSeconds(2f);
+    }
+
+    IEnumerator ChangeScene(float WaitTime)
+    {
+        yield return new WaitForSeconds(WaitTime);
+        savestats();
+        LoadManagement.ChangeToDungeon();
+    }
+
+    void savestats()
+    {
+
     }
 
     void PlayerTurn()
