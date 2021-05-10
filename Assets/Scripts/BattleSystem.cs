@@ -364,7 +364,7 @@ public class BattleSystem : MonoBehaviour
     IEnumerator LevelUp(Unit PartyMember, int HealthIncrease, int DamgeIncrease, float waitTime)
     {
         yield return new WaitForSeconds(waitTime);
-        dialogueText.text = PartyMember.name + " leveled up!";
+        dialogueText.text = PartyMember.unitName + " leveled up!";
         yield return new WaitForSeconds(2f);
         dialogueText.text = "Damage increase by " + DamgeIncrease + "\n Health increased by " + HealthIncrease;
         yield return new WaitForSeconds(2f);
@@ -379,7 +379,10 @@ public class BattleSystem : MonoBehaviour
 
     void savestats()
     {
-
+        //Save player stats
+        PlayerInfo.PlayerLevel = playerUnit.unitLevel; PlayerInfo.PlayerCurrentHP = playerUnit.currentHP; PlayerInfo.PlayerMaxHP = playerUnit.maxHP; PlayerInfo.PlayerDamage = playerUnit.damage; PlayerInfo.PlayerEXP = playerUnit.EXP;
+        //Save party member 2 stats
+        PlayerInfo.Party2Level = Party2Unit.unitLevel; PlayerInfo.Party2CurrentHP = Party2Unit.currentHP; PlayerInfo.Party2MaxHP = Party2Unit.maxHP; PlayerInfo.Party2Damage = Party2Unit.damage; PlayerInfo.Party2EXP = Party2Unit.EXP;
     }
 
     void PlayerTurn()

@@ -600,6 +600,8 @@ MonoBehaviour:
   enemyHud: {fileID: 1321346276}
   magicUI: {fileID: 1558338553}
   state: 0
+  PlayerInfo: {fileID: 0}
+  LoadManagement: {fileID: 0}
 --- !u!4 &394677633
 Transform:
   m_ObjectHideFlags: 0
@@ -2206,8 +2208,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 948012462}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 214.2, y: 468, z: 9}
-  m_LocalScale: {x: 421.77344, y: 111.746704, z: 1}
+  m_LocalPosition: {x: 319.6, y: 501.2, z: 9}
+  m_LocalScale: {x: 1264.7712, y: 377.22134, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 5
@@ -3116,8 +3118,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1321346273}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 1054.8, y: 444, z: 9}
-  m_LocalScale: {x: 416.85754, y: 111.746704, z: 1}
+  m_LocalPosition: {x: 949.4, y: 500.5, z: 9}
+  m_LocalScale: {x: 1259.8557, y: 386.5362, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 7
@@ -3649,9 +3651,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: da8a54bfa2af60c40b37a90fadb36120, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  nameText: {fileID: 2084768957}
-  levelText: {fileID: 1982987172}
-  hpSlider: {fileID: 1558905818}
+  nameText: {fileID: 1391610486}
+  levelText: {fileID: 1215792851}
+  hpSlider: {fileID: 481049528}
 --- !u!4 &1649721711
 Transform:
   m_ObjectHideFlags: 0
@@ -3660,8 +3662,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1649721709}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 214.7, y: 252, z: 9}
-  m_LocalScale: {x: 423.73944, y: 111.746704, z: 1}
+  m_LocalPosition: {x: 321.6, y: 343, z: 9}
+  m_LocalScale: {x: 1257.4225, y: 363.24905, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 6

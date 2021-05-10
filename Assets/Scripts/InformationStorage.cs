@@ -7,11 +7,15 @@ public class InformationStorage : MonoBehaviour
     [HideInInspector] public int PlayerLevel, PlayerCurrentHP, PlayerEXP, PlayerMaxHP, PlayerDamage;
     [HideInInspector] public int Party2Level, Party2CurrentHP, Party2EXP, Party2MaxHP, Party2Damage;
     [HideInInspector] public int BattleNumber;
-    [HideInInspector] public Vector2 Position;
+    [HideInInspector] public Vector3 Position;
+    [HideInInspector] public List<string> EnemiesFought;
     
     // Start is called before the first frame update
     void Start()
     {
+        if (GameObject.FindGameObjectsWithTag("InfoStorage").Length > 1)
+            Destroy(this.gameObject);
+        
         DontDestroyOnLoad(this.gameObject);
     }
 

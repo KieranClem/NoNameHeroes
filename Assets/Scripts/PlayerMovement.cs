@@ -9,6 +9,16 @@ public class PlayerMovement : MonoBehaviour
     Vector2 movement;
     public Animator animator;
     public StartBattle LoadManager;
+    public InformationStorage Info;
+
+    private void Start()
+    {
+        Info = GameObject.FindGameObjectWithTag("InfoStorage").GetComponent<InformationStorage>();
+        if(Info.BattleNumber > 0)
+        {
+            this.transform.position = Info.Position;
+        }
+    }
 
     // Update is called once per frame
     void Update()
@@ -31,6 +41,8 @@ public class PlayerMovement : MonoBehaviour
     {
         if(collision.tag == "Enemy")
         {
+            Info.Position = this.transform.position;
+            Info.EnemiesFought.Add(collision.name);
             LoadManager.ChangeToBattleScene();
         }
     }
