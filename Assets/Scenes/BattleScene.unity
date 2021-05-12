@@ -1045,7 +1045,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 1.7437134, y: -16.838135}
+  m_AnchoredPosition: {x: 21.2, y: -16.838135}
   m_SizeDelta: {x: 160, y: 20}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &481049528
@@ -2006,7 +2006,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 1.7437134, y: -16.838135}
+  m_AnchoredPosition: {x: 21.199999, y: -16.838135}
   m_SizeDelta: {x: 160, y: 20}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &874981732
@@ -2229,6 +2229,7 @@ MonoBehaviour:
   nameText: {fileID: 2084768957}
   levelText: {fileID: 1982987172}
   hpSlider: {fileID: 1558905818}
+  HP: {fileID: 1704703819}
 --- !u!1 &963194225
 GameObject:
   m_ObjectHideFlags: 0
@@ -3139,6 +3140,7 @@ MonoBehaviour:
   nameText: {fileID: 2009820241}
   levelText: {fileID: 1886722370}
   hpSlider: {fileID: 874981732}
+  HP: {fileID: 1895024389}
 --- !u!1 &1352363467
 GameObject:
   m_ObjectHideFlags: 0
@@ -3568,7 +3570,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 1.7437134, y: -16.838135}
+  m_AnchoredPosition: {x: 21.199999, y: -16.838135}
   m_SizeDelta: {x: 160, y: 20}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1558905818
@@ -3654,6 +3656,7 @@ MonoBehaviour:
   nameText: {fileID: 1391610486}
   levelText: {fileID: 1215792851}
   hpSlider: {fileID: 481049528}
+  HP: {fileID: 629025698}
 --- !u!4 &1649721711
 Transform:
   m_ObjectHideFlags: 0
