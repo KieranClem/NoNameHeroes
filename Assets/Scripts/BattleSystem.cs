@@ -25,6 +25,8 @@ public class BattleSystem : MonoBehaviour
     public BattleHud Party2Hud;
     public BattleHud enemyHud;
 
+    public CameraShake cameraShake;
+
     public Image magicUI;
 
     public BattleState state;
@@ -86,6 +88,8 @@ public class BattleSystem : MonoBehaviour
 
         enemyHud.SetHP(enemyUnit.currentHP);
         dialogueText.text = enemyUnit.unitName + " took " + CurrentUnit.damage + " points of damage";
+
+        StartCoroutine(cameraShake.Shake(0.12f, 0.5f));
 
         yield return new WaitForSeconds(2f);
 
