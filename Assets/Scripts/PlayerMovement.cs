@@ -43,6 +43,7 @@ public class PlayerMovement : MonoBehaviour
         {
             Info.Position = this.transform.position;
             Info.EnemiesFought.Add(collision.name);
+            collision.GetComponent<OverworldEnemyStats>().StoreEnemy(Info);
             LoadManager.ChangeToBattleScene();
         }
     }

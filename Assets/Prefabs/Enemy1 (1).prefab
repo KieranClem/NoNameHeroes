@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 2461439736610942656}
   - component: {fileID: 2461439736610942668}
   - component: {fileID: 1490597216982079289}
+  - component: {fileID: 3817763930567445271}
   m_Layer: 0
   m_Name: Enemy1 (1)
   m_TagString: Enemy
@@ -126,6 +127,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   info: {fileID: 0}
   MovementSpeed: 5
+  walkdistance: 5
   animator: {fileID: 1490597216982079289}
   rb: {fileID: 2461439736610942668}
 --- !u!50 &2461439736610942668
@@ -168,3 +170,19 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!114 &3817763930567445271
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2461439736610942659}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5e4c611755b5e3144bfa7afa3dc8ad10, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  EnemyLevel: 1
+  EnemyMaxHP: 20
+  EnemyDamage: 5
+  EnemyEXPToGive: 10

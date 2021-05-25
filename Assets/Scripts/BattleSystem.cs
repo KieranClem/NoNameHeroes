@@ -25,6 +25,8 @@ public class BattleSystem : MonoBehaviour
     public BattleHud Party2Hud;
     public BattleHud enemyHud;
 
+    public Animator PlayerAnimation;
+
     public CameraShake cameraShake;
 
     public Image magicUI;
@@ -48,6 +50,7 @@ public class BattleSystem : MonoBehaviour
     {
         GameObject playerGo = Instantiate(PlayerPrefab, PlayerBattleStation);
         playerUnit = playerGo.GetComponent<Unit>();
+        PlayerAnimation = playerGo.GetComponentInChildren<Animator>();
 
         GameObject Party2Go = Instantiate(PartyMember2Prefab, PartyMember2Station);
         Party2Unit = Party2Go.GetComponent<Unit>();
@@ -61,6 +64,8 @@ public class BattleSystem : MonoBehaviour
         {
             SetStats();
         }
+
+        SetEnemyStats();
 
         playerHud.SetHud(playerUnit);
         Party2Hud.SetHud(Party2Unit);
@@ -82,6 +87,14 @@ public class BattleSystem : MonoBehaviour
         Party2Unit.damage = PlayerInfo.Party2Damage; Party2Unit.EXP = PlayerInfo.Party2EXP;
     }
 
+    void SetEnemyStats()
+    {
+        //Set enemy information
+        enemyUnit.unitName = PlayerInfo.EnemyName; enemyUnit.unitLevel = PlayerInfo.EnemyLevel; enemyUnit.damage = PlayerInfo.EnemyDamage; 
+        enemyUnit.maxHP = PlayerInfo.EnemyMaxHP; enemyUnit.currentHP = PlayerInfo.EnemyMaxHP; enemyUnit.EXPToGive = PlayerInfo.EnemyEXPToGive;
+        enemyUnit.element = PlayerInfo.EnemyElement;
+    }
+
     IEnumerator PlayerAttack(Unit CurrentUnit)
     {
         bool isdead = enemyUnit.TakeDamage(CurrentUnit.damage);
@@ -89,7 +102,10 @@ public class BattleSystem : MonoBehaviour
         enemyHud.SetHP(enemyUnit.currentHP);
         dialogueText.text = enemyUnit.unitName + " took " + CurrentUnit.damage + " points of damage";
 
-        StartCoroutine(cameraShake.Shake(0.12f, 0.5f));
+        if(CurrentUnit.unitName == "Player")
+            PlayerAnimation.Play("Player-Attack");
+
+        StartCoroutine(cameraShake.Shake(0.1f, 5f));
 
         yield return new WaitForSeconds(2f);
 
@@ -118,12 +134,12 @@ public class BattleSystem : MonoBehaviour
         bool isdead;
 
         //Check if enemy is weak, resistent or neutral to the magic type
-        if(enemyUnit.element == Unit.Element.Wind)
+        if(enemyUnit.element == Element.Wind)
         {
             isdead = enemyUnit.TakeDamage(CurrentUnit.damage * 2);
             dialogueText.text = enemyUnit.unitName + " took " + (CurrentUnit.damage * 2) + " points of damage";
         }
-        else if(enemyUnit.element == Unit.Element.Earth)
+        else if(enemyUnit.element == Element.Earth)
         {
             isdead = enemyUnit.TakeDamage(CurrentUnit.damage/2);
             dialogueText.text = enemyUnit.unitName + " took " + (CurrentUnit.damage / 2) + " points of damage";
@@ -136,6 +152,8 @@ public class BattleSystem : MonoBehaviour
 
         enemyHud.SetHP(enemyUnit.currentHP);
         magicUI.gameObject.SetActive(false);
+
+        StartCoroutine(cameraShake.Shake(0.5f, 2f));
 
         yield return new WaitForSeconds(2f);
 
@@ -165,12 +183,12 @@ public class BattleSystem : MonoBehaviour
         bool isdead;
 
         //Check if enemy is weak, resistent or neutral to the magic type
-        if (enemyUnit.element == Unit.Element.Earth)
+        if (enemyUnit.element == Element.Earth)
         {
             isdead = enemyUnit.TakeDamage(CurrentUnit.damage * 2);
             dialogueText.text = enemyUnit.unitName + " took " + (CurrentUnit.damage * 2) + " points of damage";
         }
-        else if (enemyUnit.element == Unit.Element.Electricity)
+        else if (enemyUnit.element == Element.Electricity)
         {
             isdead = enemyUnit.TakeDamage(CurrentUnit.damage / 2);
             dialogueText.text = enemyUnit.unitName + " took " + (CurrentUnit.damage / 2) + " points of damage";
@@ -183,6 +201,8 @@ public class BattleSystem : MonoBehaviour
 
         enemyHud.SetHP(enemyUnit.currentHP);
         magicUI.gameObject.SetActive(false);
+
+        StartCoroutine(cameraShake.Shake(0.5f, 3f));
 
         yield return new WaitForSeconds(2f);
 
@@ -212,12 +232,12 @@ public class BattleSystem : MonoBehaviour
         bool isdead;
 
         //Check if enemy is weak, resistent or neutral to the magic type
-        if (enemyUnit.element == Unit.Element.Electricity)
+        if (enemyUnit.element == Element.Electricity)
         {
             isdead = enemyUnit.TakeDamage(CurrentUnit.damage * 2);
             dialogueText.text = enemyUnit.unitName + " took " + (CurrentUnit.damage * 2) + " points of damage";
         }
-        else if (enemyUnit.element == Unit.Element.Wind)
+        else if (enemyUnit.element == Element.Wind)
         {
             isdead = enemyUnit.TakeDamage(CurrentUnit.damage / 2);
             dialogueText.text = enemyUnit.unitName + " took " + (CurrentUnit.damage / 2) + " points of damage";
@@ -230,6 +250,8 @@ public class BattleSystem : MonoBehaviour
 
         enemyHud.SetHP(enemyUnit.currentHP);
         magicUI.gameObject.SetActive(false);
+
+        StartCoroutine(cameraShake.Shake(0.5f, 8f));
 
         yield return new WaitForSeconds(2f);
 
@@ -263,7 +285,7 @@ public class BattleSystem : MonoBehaviour
         Unit UnitTakingDamage;
         BattleHud HudForUnit;
 
-        if(Random.Range(1,2) == 1)
+        if(Random.Range(0,2) == 1)
         {
             UnitTakingDamage = playerUnit;
             HudForUnit = playerHud;
@@ -287,6 +309,8 @@ public class BattleSystem : MonoBehaviour
         bool isDead = UnitTakingDamage.TakeDamage(enemyUnit.damage);
 
         HudForUnit.SetHP(UnitTakingDamage.currentHP);
+
+        StartCoroutine(cameraShake.Shake(0.1f, 5f));
 
         yield return new WaitForSeconds(2f);
 
@@ -320,7 +344,7 @@ public class BattleSystem : MonoBehaviour
         {
             PlayerInfo.BattleNumber += 1;
 
-            dialogueText.text = "All enemies defeated! Party gained 10 exp";
+            dialogueText.text = "All enemies defeated! Party gained " + enemyUnit.EXPToGive + " exp";
             
             //AddExperience/LevelUp
             int PlayerDamageIncrease, PlayerHealthIncrease;
@@ -328,8 +352,8 @@ public class BattleSystem : MonoBehaviour
             bool PlayerLeveledUp = false, Party2LeveledUp = false;
 
 
-            playerUnit.CheckForLevelUp(10, out PlayerLeveledUp, out PlayerHealthIncrease, out PlayerDamageIncrease);
-            Party2Unit.CheckForLevelUp(10, out Party2LeveledUp, out Party2HealthIncrease, out Party2DamageIncrease);
+            playerUnit.CheckForLevelUp(enemyUnit.EXPToGive, out PlayerLeveledUp, out PlayerHealthIncrease, out PlayerDamageIncrease);
+            Party2Unit.CheckForLevelUp(enemyUnit.EXPToGive, out Party2LeveledUp, out Party2HealthIncrease, out Party2DamageIncrease);
 
             float WaitTime = 3f;
 

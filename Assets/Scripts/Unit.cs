@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+public enum Element { Electricity, Wind, Earth }
+
 public class Unit : MonoBehaviour
 {
     public string unitName;
@@ -12,7 +14,9 @@ public class Unit : MonoBehaviour
     public int maxHP;
     public int currentHP;
 
-    public enum Element { Electricity, Wind, Earth }
+    public int EXPToGive;
+
+    //public enum Element { Electricity, Wind, Earth }
 
     public Element element;
 
@@ -59,12 +63,44 @@ public class Unit : MonoBehaviour
             LeveledUp = true;
             HealthIncrease = HealthGain;
             DamageIncrease = DamageGain;
+            IncreaseEXPToLevel();
         }
         else
         {
             LeveledUp = false;
             HealthIncrease = HealthGain;
             DamageIncrease = DamageGain;
+        }
+    }
+
+    void IncreaseEXPToLevel()
+    {
+        switch (unitLevel)
+        {
+            case 2:
+                EXPToLevel += 20;
+                break;
+            case 3:
+                EXPToLevel += 60;
+                break;
+            case 4:
+                EXPToLevel += 100;
+                break;
+            case 5:
+                EXPToLevel += 140;
+                break;
+            case 6:
+                EXPToLevel += 180;
+                break;
+            case 7:
+                EXPToLevel += 220;
+                break;
+            case 8:
+                EXPToLevel += 40;
+                break;
+            case 9:
+                EXPToLevel += 45;
+                break;
         }
     }
 }
