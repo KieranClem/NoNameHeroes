@@ -591,6 +591,7 @@ MonoBehaviour:
   PlayerPrefab: {fileID: 3954729444178621171, guid: 44fdb56301bb2c64bae6a871a1880888, type: 3}
   PartyMember2Prefab: {fileID: 2040480340457346943, guid: b1d263c8fe0d36f4abca6eb97568392d, type: 3}
   EnemyPrefab: {fileID: 5141131859462761178, guid: c6fac2307cb86ff4385c31992037360f, type: 3}
+  BossPrefab: {fileID: 5430176960469563897, guid: 7563215e228b5ff40a738f693b7973e4, type: 3}
   PlayerBattleStation: {fileID: 948012464}
   PartyMember2Station: {fileID: 1649721711}
   EnemyBattleStattion: {fileID: 1321346275}
@@ -2005,7 +2006,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -22.9, y: -0}
+  m_AnchoredPosition: {x: -22.9, y: 0}
   m_SizeDelta: {x: 160, y: 30}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &767669582

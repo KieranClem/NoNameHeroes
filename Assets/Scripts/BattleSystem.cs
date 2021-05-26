@@ -10,6 +10,7 @@ public class BattleSystem : MonoBehaviour
     public GameObject PlayerPrefab;
     public GameObject PartyMember2Prefab;
     public GameObject EnemyPrefab;
+    public GameObject BossPrefab;
 
     public Transform PlayerBattleStation;
     public Transform PartyMember2Station;
@@ -55,8 +56,16 @@ public class BattleSystem : MonoBehaviour
         GameObject Party2Go = Instantiate(PartyMember2Prefab, PartyMember2Station);
         Party2Unit = Party2Go.GetComponent<Unit>();
 
-        GameObject enemyGo = Instantiate(EnemyPrefab, EnemyBattleStattion);
-        enemyUnit = enemyGo.GetComponent<Unit>();
+        if (PlayerInfo.EnemyName == "Big Bad Tree")
+        {
+            GameObject enemyGo = Instantiate(BossPrefab, EnemyBattleStattion);
+            enemyUnit = enemyGo.GetComponent<Unit>();
+        }
+        else
+        {
+            GameObject enemyGo = Instantiate(EnemyPrefab, EnemyBattleStattion);
+            enemyUnit = enemyGo.GetComponent<Unit>();
+        }
 
         dialogueText.text ="Monster " + enemyUnit.unitName + " attacks!";
 
@@ -306,7 +315,9 @@ public class BattleSystem : MonoBehaviour
             }
         }
 
-        bool isDead = UnitTakingDamage.TakeDamage(enemyUnit.damage);
+        int DamageTaken = EnemyElementalDamage(UnitTakingDamage);
+
+        bool isDead = UnitTakingDamage.TakeDamage(DamageTaken);
 
         HudForUnit.SetHP(UnitTakingDamage.currentHP);
 
@@ -314,7 +325,7 @@ public class BattleSystem : MonoBehaviour
 
         yield return new WaitForSeconds(2f);
 
-        dialogueText.text = UnitTakingDamage.unitName + " took " + enemyUnit.damage + " points of damage";
+        dialogueText.text = UnitTakingDamage.unitName + " took " + DamageTaken + " points of damage";
 
         yield return new WaitForSeconds(2f);
 
@@ -335,6 +346,58 @@ public class BattleSystem : MonoBehaviour
                 state = BattleState.PARTY2TURN;
                 Party2Turn();
             }
+        }
+    }
+
+    int EnemyElementalDamage(Unit UnitTakingDamage)
+    {
+        if(enemyUnit.element == Element.Earth)
+        {
+            //Check if unit being attacked is weak, resistent or neutral to the magic type
+            if (UnitTakingDamage.element == Element.Electricity)
+            {
+                return enemyUnit.damage * 2;
+            }
+            else if (UnitTakingDamage.element == Element.Wind)
+            {
+                return enemyUnit.damage / 2;
+            }
+            else
+            {
+                return enemyUnit.damage;
+            }
+        }
+        else if(enemyUnit.element == Element.Electricity)
+        {
+            if (UnitTakingDamage.element == Element.Wind)
+            {
+                return enemyUnit.damage * 2;
+            }
+            else if (UnitTakingDamage.element == Element.Earth)
+            {
+                return enemyUnit.damage / 2;
+            }
+            else
+            {
+                return enemyUnit.damage;
+            }
+        }
+        else
+        {
+            //Check if unit is weak, resistent or neutral to the magic type
+            if (UnitTakingDamage.element == Element.Earth)
+            {
+                return enemyUnit.damage * 2;
+            }
+            else if (UnitTakingDamage.element == Element.Electricity)
+            {
+                return enemyUnit.damage / 2;
+            }
+            else
+            {
+                return enemyUnit.damage;
+            }
+
         }
     }
 

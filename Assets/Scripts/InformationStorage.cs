@@ -1,6 +1,8 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
+using UnityEngine.Tilemaps;
 
 public class InformationStorage : MonoBehaviour
 {
@@ -22,9 +24,20 @@ public class InformationStorage : MonoBehaviour
         DontDestroyOnLoad(this.gameObject);
     }
 
-    // Update is called once per frame
-    void Update()
+    void OnEnable()
+    {
+        SceneManager.sceneLoaded += OnSceneLoaded;
+    }
+
+    void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
         
+        if (EnemiesFought.Contains("BossMonster") && SceneManager.GetActiveScene().name =="Dungeon")
+        {
+            GameObject DoorToUnlock = GameObject.FindGameObjectWithTag("Door");
+            DoorToUnlock.GetComponent<TilemapRenderer>().enabled = true;
+            DoorToUnlock.GetComponent<Collider2D>().enabled = true;
+            DoorToUnlock.transform.Find("SceneChanger").gameObject.SetActive(true);
+        }
     }
 }
