@@ -29,6 +29,8 @@ public class BattleSystem : MonoBehaviour
     public Animator PlayerAnimation;
 
     public CameraShake cameraShake;
+    public Material PlayerSkyBox;
+    public Material EnemySkyBox;
 
     public Image magicUI;
 
@@ -287,6 +289,8 @@ public class BattleSystem : MonoBehaviour
 
     IEnumerator enemyTurn()
     {
+        RenderSettings.skybox = EnemySkyBox;
+        
         dialogueText.text = enemyUnit.unitName + " attacks!";
 
         yield return new WaitForSeconds(2f);
@@ -478,11 +482,13 @@ public class BattleSystem : MonoBehaviour
 
     void PlayerTurn()
     {
+        RenderSettings.skybox = PlayerSkyBox;
         dialogueText.text = "Make a move: ";
     }
 
     void Party2Turn()
     {
+        RenderSettings.skybox = PlayerSkyBox;
         dialogueText.text = Party2Unit.unitName + " makes a move";
     }
 

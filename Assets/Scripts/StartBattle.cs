@@ -6,6 +6,7 @@ using UnityEngine.SceneManagement;
 public class StartBattle : MonoBehaviour
 {
     public InformationStorage PlayerInfo;
+    public Animator transition;
     
     // Start is called before the first frame update
     void Start()
@@ -13,8 +14,12 @@ public class StartBattle : MonoBehaviour
         DontDestroyOnLoad(this.gameObject);
     }
 
-    public void ChangeToBattleScene()
+    public IEnumerator ChangeToBattleScene()
     {
+        transition.SetTrigger("Start");
+
+        yield return new WaitForSeconds(1f);
+
         SceneManager.LoadScene("BattleScene");
     }
 

@@ -601,6 +601,8 @@ MonoBehaviour:
   enemyHud: {fileID: 1321346276}
   PlayerAnimation: {fileID: 0}
   cameraShake: {fileID: 963194229}
+  PlayerSkyBox: {fileID: 2100000, guid: 6225fa8890cf025489e57d3aa1d87260, type: 2}
+  EnemySkyBox: {fileID: 2100000, guid: 2441c79940171dc43b33badf9fe97828, type: 2}
   magicUI: {fileID: 1558338553}
   state: 0
   PlayerInfo: {fileID: 0}
@@ -3413,7 +3415,7 @@ GameObject:
   - component: {fileID: 1352363468}
   m_Layer: 5
   m_Name: Canvas
-  m_TagString: Untagged
+  m_TagString: Canvas
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

@@ -7,6 +7,7 @@ TagManager:
   - Enemy
   - InfoStorage
   - Door
+  - Canvas
   layers:
   - Default
   - TransparentFX

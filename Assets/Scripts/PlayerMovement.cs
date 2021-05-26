@@ -10,6 +10,7 @@ public class PlayerMovement : MonoBehaviour
     public Animator animator;
     public StartBattle LoadManager;
     public InformationStorage Info;
+    bool CanMove = true;
 
     private void Start()
     {
@@ -23,18 +24,24 @@ public class PlayerMovement : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        movement.x = Input.GetAxisRaw("Horizontal");
-        movement.y = Input.GetAxisRaw("Vertical");
+        if (CanMove)
+        {
+            movement.x = Input.GetAxisRaw("Horizontal");
+            movement.y = Input.GetAxisRaw("Vertical");
 
-        animator.SetFloat("Horizontal", movement.x);
-        animator.SetFloat("Vertical", movement.y);
-        animator.SetFloat("Speed", movement.sqrMagnitude);
+            animator.SetFloat("Horizontal", movement.x);
+            animator.SetFloat("Vertical", movement.y);
+            animator.SetFloat("Speed", movement.sqrMagnitude);
+        }
 
     }
 
     private void FixedUpdate()
     {
-        rb.MovePosition(rb.position + movement * MovementSpeed * Time.fixedDeltaTime);
+        if (CanMove)
+        {
+            rb.MovePosition(rb.position + movement * MovementSpeed * Time.fixedDeltaTime);
+        }
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
@@ -44,7 +51,10 @@ public class PlayerMovement : MonoBehaviour
             Info.Position = this.transform.position;
             Info.EnemiesFought.Add(collision.name);
             collision.GetComponent<OverworldEnemyStats>().StoreEnemy(Info);
-            LoadManager.ChangeToBattleScene();
+            if(collision.GetComponent<EnemyMovement>() != null)
+                collision.GetComponent<EnemyMovement>().enabled = false;
+            CanMove = false;
+            StartCoroutine(LoadManager.ChangeToBattleScene());
         }
     }
 }

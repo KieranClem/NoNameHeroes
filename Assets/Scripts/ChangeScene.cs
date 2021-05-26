@@ -11,8 +11,17 @@ public class ChangeScene : MonoBehaviour
     {
         if(collision.tag == "Player")
         {
-            Debug.Log("FoundPlayer");
-            //SceneManager.LoadScene("");
+            SceneManager.LoadScene("EndScreen");
         }
+    }
+
+    public void LoadMainGame()
+    {
+        SceneManager.LoadScene("Dungeon");
+    }
+
+    public void EndGame()
+    {
+        Application.Quit();
     }
 }
