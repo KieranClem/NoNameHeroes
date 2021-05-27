@@ -7,7 +7,7 @@ public enum Element { Electricity, Wind, Earth }
 public class Unit : MonoBehaviour
 {
     public string unitName;
-    public int unitLevel;
+    public int unitLevel = 1;
 
     public int damage;
 
@@ -49,6 +49,7 @@ public class Unit : MonoBehaviour
 
     public void CheckForLevelUp(int ExpAdd, out bool LeveledUp,out int HealthIncrease, out int DamageIncrease)
     {
+        
         EXP += ExpAdd;
         int HealthGain = 0;
         int DamageGain = 0;

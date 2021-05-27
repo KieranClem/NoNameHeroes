@@ -79945,11 +79945,13 @@ MonoBehaviour:
   PlayerLevel: 0
   PlayerCurrentHP: 0
   PlayerEXP: 0
+  PlayerEXPToNext: 0
   PlayerMaxHP: 0
   PlayerDamage: 0
   Party2Level: 0
   Party2CurrentHP: 0
   Party2EXP: 0
+  Party2EXPToNext: 0
   Party2MaxHP: 0
   Party2Damage: 0
   EnemyName: 
@@ -80045,6 +80047,10 @@ PrefabInstance:
     - target: {fileID: 3817763930567445271, guid: 9a7838e1be0fd4d4c9f400072acad2ec, type: 3}
       propertyPath: EnemyMaxHP
       value: 40
+      objectReference: {fileID: 0}
+    - target: {fileID: 3817763930567445271, guid: 9a7838e1be0fd4d4c9f400072acad2ec, type: 3}
+      propertyPath: EnemyEXPToGive
+      value: 10
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 9a7838e1be0fd4d4c9f400072acad2ec, type: 3}

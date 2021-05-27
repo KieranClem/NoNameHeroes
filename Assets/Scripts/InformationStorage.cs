@@ -6,8 +6,8 @@ using UnityEngine.Tilemaps;
 
 public class InformationStorage : MonoBehaviour
 {
-    [HideInInspector] public int PlayerLevel, PlayerCurrentHP, PlayerEXP, PlayerMaxHP, PlayerDamage;
-    [HideInInspector] public int Party2Level, Party2CurrentHP, Party2EXP, Party2MaxHP, Party2Damage;
+    [HideInInspector] public int PlayerLevel, PlayerCurrentHP, PlayerEXP, PlayerEXPToNext, PlayerMaxHP, PlayerDamage;
+    [HideInInspector] public int Party2Level, Party2CurrentHP, Party2EXP, Party2EXPToNext, Party2MaxHP, Party2Damage;
     [HideInInspector] public string EnemyName;
     [HideInInspector] public Element EnemyElement;
     [HideInInspector] public int EnemyLevel, EnemyMaxHP, EnemyDamage, EnemyEXPToGive;

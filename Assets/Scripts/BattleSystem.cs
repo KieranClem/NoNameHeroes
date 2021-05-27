@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public enum BattleState { START, PLAYERTURN, PARTY2TURN, ENEMYTURN, WON, LOST }
+public enum BattleState { START, PLAYERTURN, PARTY2TURN, ENEMYTURN, WON, LOST, NOATTACK }
 
 public class BattleSystem : MonoBehaviour
 {
@@ -92,10 +92,10 @@ public class BattleSystem : MonoBehaviour
     {
         //Set player information
         playerUnit.unitLevel = PlayerInfo.PlayerLevel; playerUnit.currentHP = PlayerInfo.PlayerCurrentHP; playerUnit.maxHP = PlayerInfo.PlayerMaxHP; 
-        playerUnit.damage = PlayerInfo.PlayerDamage; playerUnit.EXP = PlayerInfo.PlayerEXP;
+        playerUnit.damage = PlayerInfo.PlayerDamage; playerUnit.EXP = PlayerInfo.PlayerEXP; playerUnit.EXPToLevel = PlayerInfo.PlayerEXPToNext;
         //Set player 2 information
         Party2Unit.unitLevel = PlayerInfo.Party2Level; Party2Unit.currentHP = PlayerInfo.Party2CurrentHP; Party2Unit.maxHP = PlayerInfo.Party2MaxHP;
-        Party2Unit.damage = PlayerInfo.Party2Damage; Party2Unit.EXP = PlayerInfo.Party2EXP;
+        Party2Unit.damage = PlayerInfo.Party2Damage; Party2Unit.EXP = PlayerInfo.Party2EXP; Party2Unit.EXPToLevel = PlayerInfo.Party2EXPToNext;
     }
 
     void SetEnemyStats()
@@ -118,8 +118,11 @@ public class BattleSystem : MonoBehaviour
 
         StartCoroutine(cameraShake.Shake(0.1f, 5f));
 
+        BattleState currentstate = state;
+        state = BattleState.NOATTACK;
         yield return new WaitForSeconds(2f);
-
+        state = currentstate;
+        
         if (isdead)
         {
             state = BattleState.WON;
@@ -166,7 +169,10 @@ public class BattleSystem : MonoBehaviour
 
         StartCoroutine(cameraShake.Shake(0.5f, 2f));
 
+        BattleState currentstate = state;
+        state = BattleState.NOATTACK;
         yield return new WaitForSeconds(2f);
+        state = currentstate;
 
         //check if enemy is dead
         if (isdead)
@@ -215,7 +221,11 @@ public class BattleSystem : MonoBehaviour
 
         StartCoroutine(cameraShake.Shake(0.5f, 3f));
 
+        BattleState currentstate = state;
+        state = BattleState.NOATTACK;
         yield return new WaitForSeconds(2f);
+        state = currentstate;
+
 
         //check if enemy is dead
         if (isdead)
@@ -264,7 +274,11 @@ public class BattleSystem : MonoBehaviour
 
         StartCoroutine(cameraShake.Shake(0.5f, 8f));
 
+        BattleState currentstate = state;
+        state = BattleState.NOATTACK;
         yield return new WaitForSeconds(2f);
+        state = currentstate;
+
 
         //check if enemy is dead
         if (isdead)
@@ -475,9 +489,9 @@ public class BattleSystem : MonoBehaviour
     void savestats()
     {
         //Save player stats
-        PlayerInfo.PlayerLevel = playerUnit.unitLevel; PlayerInfo.PlayerCurrentHP = playerUnit.currentHP; PlayerInfo.PlayerMaxHP = playerUnit.maxHP; PlayerInfo.PlayerDamage = playerUnit.damage; PlayerInfo.PlayerEXP = playerUnit.EXP;
+        PlayerInfo.PlayerLevel = playerUnit.unitLevel; PlayerInfo.PlayerCurrentHP = playerUnit.currentHP; PlayerInfo.PlayerMaxHP = playerUnit.maxHP; PlayerInfo.PlayerDamage = playerUnit.damage; PlayerInfo.PlayerEXP = playerUnit.EXP; PlayerInfo.PlayerEXPToNext = playerUnit.EXPToLevel;
         //Save party member 2 stats
-        PlayerInfo.Party2Level = Party2Unit.unitLevel; PlayerInfo.Party2CurrentHP = Party2Unit.currentHP; PlayerInfo.Party2MaxHP = Party2Unit.maxHP; PlayerInfo.Party2Damage = Party2Unit.damage; PlayerInfo.Party2EXP = Party2Unit.EXP;
+        PlayerInfo.Party2Level = Party2Unit.unitLevel; PlayerInfo.Party2CurrentHP = Party2Unit.currentHP; PlayerInfo.Party2MaxHP = Party2Unit.maxHP; PlayerInfo.Party2Damage = Party2Unit.damage; PlayerInfo.Party2EXP = Party2Unit.EXP; PlayerInfo.Party2EXPToNext = Party2Unit.EXPToLevel;
     }
 
     void PlayerTurn()
@@ -494,13 +508,24 @@ public class BattleSystem : MonoBehaviour
 
     IEnumerator PlayerHeal(Unit CurrentUnit)
     {
-        CurrentUnit.Heal(5);
+        CurrentUnit.Heal(CurrentUnit.damage);
 
-        playerHud.SetHP(CurrentUnit.currentHP);
+        if (state == BattleState.PLAYERTURN)
+        {
+            playerHud.SetHP(CurrentUnit.currentHP);
+        }
+        else
+        {
+            Party2Hud.SetHP(CurrentUnit.currentHP);
+        }
 
         dialogueText.text = CurrentUnit.unitName + " healed";
 
-        yield return new WaitForSeconds(1f);
+        BattleState currentstate = state;
+        state = BattleState.NOATTACK;
+        yield return new WaitForSeconds(2f);
+        state = currentstate;
+
 
         if (Party2Unit.currentHP > 0 && state == BattleState.PLAYERTURN)
         {
